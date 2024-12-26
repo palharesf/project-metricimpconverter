@@ -7,12 +7,13 @@ module.exports = function (app) {
   let convertHandler = new ConvertHandler();
 
   app.get("/api/convert", function (req, res) {
-    const match = req.query.input.match(/^(\d*(?:\.\d+)?(?:\/\d*(?:\.\d+)?)?)\s*([a-zA-Z]{1,3})$/);
-    if (match) {
-      const initNum = convertHandler.getNum(match);
-      const initUnit = convertHandler.getUnit(match);
-      const returnNum = parseFloat(convertHandler.convert(initNum, initUnit).toFixed(5));
-      const returnUnit = convertHandler.getReturnUnit(initUnit);
+    const input = req.query.input;
+    const index = input.search(/[a-zA-Z]/);
+    if (index !== -1) {
+      const initNum = convertHandler.getNum(input);
+      const initUnit = convertHandler.getUnit(input);
+      const returnNum = parseFloat(convertHandler.convert(initNum, initUnit));
+      const returnUnit = convertHandler.getReturnUnit(initUnit) === 'l' || convertHandler.getReturnUnit(initUnit) === 'L' ? 'L' : convertHandler.getReturnUnit(initUnit) ? 'L' : convertHandler.getReturnUnit(initUnit).toLowerCase();
       const string = convertHandler.getString(
         initNum,
         initUnit,
@@ -20,13 +21,31 @@ module.exports = function (app) {
         returnUnit
       );
 
-      res.json({
-        initNum,
-        initUnit,
-        returnNum,
-        returnUnit,
-        string,
-      });
+      if (initNum === "invalid number" && initUnit === "invalid unit") {
+        res.json({
+          error: "invalid number and unit",
+        });
+        return;
+      } else if (initNum === "invalid number") {
+        res.json({
+          error: "invalid number",
+        });
+        return;
+      } else if (initUnit === "invalid unit") {
+        res.json({
+          error: "invalid unit",
+        });
+        return;
+      } else {
+        res.json({
+          initNum,
+          initUnit,
+          returnNum,
+          returnUnit,
+          string,
+        });
+        return;
+      }
     }
   });
 };
