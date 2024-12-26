@@ -30,7 +30,26 @@ function ConvertHandler() {
 
   this.spellOutUnit = function(unit) {
     let result;
-    
+    switch (unit) {
+      case 'gal':
+        result = 'gallons';
+        break;
+      case 'lbs':
+        result = 'pounds';
+        break;
+      case 'mi':
+        result = 'miles';
+        break;
+      case 'L':
+        result = 'liters';
+        break;
+      case 'kg':
+        result = 'kilograms';
+        break;
+      case 'km':
+        result = 'kilometers';
+        break;
+    }
     return result;
   };
   
@@ -55,7 +74,9 @@ function ConvertHandler() {
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
     let result;
-    
+    let initUnitLong = this.spellOutUnit(initUnit);
+    let returnUnitLong = this.spellOutUnit(returnUnit);
+    result = `${initNum} ${initUnitLong} converts to ${returnNum} ${returnUnitLong}`;
     return result;
   };
   
