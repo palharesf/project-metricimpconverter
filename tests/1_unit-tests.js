@@ -5,6 +5,7 @@ const ConvertHandler = require("../controllers/convertHandler.js");
 let convertHandler = new ConvertHandler();
 
 suite("Unit Tests", function () {
+
   test("Whole number input", function (done) {
     let input = "32lbs";
     assert.equal(convertHandler.getNum(input), 32);
@@ -63,14 +64,14 @@ suite("Unit Tests", function () {
     done();
   });
 
-  test("Valid units input", function (done) {
+  test("Valid unit conversion input", function (done) {
     let input = "kg";
     assert.equal(convertHandler.getReturnUnit(input), "lbs");
     input = "lbs";
     assert.equal(convertHandler.getReturnUnit(input), "kg");
     input = "gal";
     assert.equal(convertHandler.getReturnUnit(input), "L");
-    input = "l";
+    input = "L";
     assert.equal(convertHandler.getReturnUnit(input), "gal");
     input = "km";
     assert.equal(convertHandler.getReturnUnit(input), "mi");
@@ -86,7 +87,7 @@ suite("Unit Tests", function () {
     assert.equal(convertHandler.spellOutUnit(input), "pounds");
     input = "gal";
     assert.equal(convertHandler.spellOutUnit(input), "gallons");
-    input = "l";
+    input = "L";
     assert.equal(convertHandler.spellOutUnit(input), "liters");
     input = "km";
     assert.equal(convertHandler.spellOutUnit(input), "kilometers");
