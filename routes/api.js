@@ -13,7 +13,7 @@ module.exports = function (app) {
       const initNum = convertHandler.getNum(input);
       const initUnit = convertHandler.getUnit(input);
       const returnNum = parseFloat(convertHandler.convert(initNum, initUnit));
-      const returnUnit = convertHandler.getReturnUnit(initUnit) === 'l' || convertHandler.getReturnUnit(initUnit) === 'L' ? 'L' : convertHandler.getReturnUnit(initUnit) ? 'L' : convertHandler.getReturnUnit(initUnit).toLowerCase();
+      const returnUnit = convertHandler.getReturnUnit(initUnit);
       const string = convertHandler.getString(
         initNum,
         initUnit,
@@ -21,20 +21,14 @@ module.exports = function (app) {
         returnUnit
       );
 
-      if (initNum === "invalid number" && initUnit === "invalid unit") {
-        res.json({
-          error: "invalid number and unit",
-        });
+      if (initNum == "invalid number" && initUnit == "invalid unit") {
+        res.json({ error: "invalid number and unit" });
         return;
-      } else if (initNum === "invalid number") {
-        res.json({
-          error: "invalid number",
-        });
+      } else if (initNum == "invalid number") {
+        res.json({ error: "invalid number" });
         return;
-      } else if (initUnit === "invalid unit") {
-        res.json({
-          error: "invalid unit",
-        });
+      } else if (initUnit == "invalid unit") {
+        res.json({ error: "invalid unit" })
         return;
       } else {
         res.json({
