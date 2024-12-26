@@ -2,7 +2,11 @@ function ConvertHandler() {
   
   this.getNum = function(input) {
     let result;
-    result = parseFloat(input[1]);
+    if (input[1] !== "") {
+      result = eval(input[1]);
+    } else {
+      result = 1;
+    }
     return result;
   };
   
