@@ -11,7 +11,7 @@ module.exports = function (app) {
     if (match) {
       const initNum = convertHandler.getNum(match);
       const initUnit = convertHandler.getUnit(match);
-      const returnNum = convertHandler.convert(initNum, initUnit);
+      const returnNum = parseFloat(convertHandler.convert(initNum, initUnit).toFixed(5));
       const returnUnit = convertHandler.getReturnUnit(initUnit);
       const string = convertHandler.getString(
         initNum,
