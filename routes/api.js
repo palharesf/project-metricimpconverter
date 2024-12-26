@@ -7,7 +7,7 @@ module.exports = function (app) {
   let convertHandler = new ConvertHandler();
 
   app.get("/api/convert", function (req, res) {
-    const match = req.query.input.match(/^(\d+(?:\.\d+)?)(.*)$/);
+    const match = req.query.input.match(/^(\d*(?:\.\d+)?(?:\/\d*(?:\.\d+)?)?)\s*([a-zA-Z]{1,3})$/);
     if (match) {
       const initNum = convertHandler.getNum(match);
       const initUnit = convertHandler.getUnit(match);
